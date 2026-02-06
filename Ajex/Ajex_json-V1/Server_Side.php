@@ -1,8 +1,6 @@
 <?php
     header('Content-Type: application/json');
-    if (isset($_POST['nome']) && !empty($_POST['nome'])){
-
-    }
+    
     $nome = $_POST['nome'];
     $cognome = $_POST['cognome'];
     $eta = $_POST['eta'];
