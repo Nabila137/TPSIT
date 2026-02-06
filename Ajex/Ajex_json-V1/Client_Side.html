@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajex_JSON</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #risultato {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            background-color: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Ajex con risposta JSON</h2>
+        <input type="text" id="nome" placeholder="Inserisci il tuo nome">
+        <input type="text" id="cognome" placeholder="Inserisci il tuo cognome">
+        <input type="number" id="eta" placeholder="Inserisci l'eta">
+        <button onclick="inviaDati()">Invia</button>
+        <div id="risultato"></div>
+    </div>
+
+    <script>
+        function inviaDati() {
+            const nome = document.getElementById('nome').value;
+            const cognome = document.getElementById('cognome').value;
+            const eta = document.getElementById('eta').value;
+            const risultato = document.getElementById('risultato');
+
+            if (!nome || !cognome || !eta) {
+                alert('Tutti i campi sono obbligatori!');
+                return;
+            }
+
+            // Crea l'oggetto XMLHttpRequest
+            const xmlhttp = new XMLHttpRequest();
+
+            // Configura la richiesta
+            xmlhttp.open('POST', 'Server_Side.php', true); //apre la richiesta http. Specifica il tipo di richiesta "POST"
+            xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            // Gestisce la risposta
+            xmlhttp.onload = function() {
+                if (xmlhttp.status === 200) {
+                    // Mostrare direttamente la risposta del PHP
+                    risultato.innerHTML = xmlhttp.responseText;
+                    risultato.style.display = 'block';
+                }
+            };
+
+            const data = [nome, cognome, eta]
+            //const data = {nome:nome, cognome:cognome, eta:eta};
+            // Inviare i dati
+            xmlhttp.send('data=' + data);
+        }
+    </script>
+</body>
+</html>
